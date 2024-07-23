@@ -1,0 +1,60 @@
+1.调用GetBillIn接口获取代计价信息
+入参示列:
+<Request>
+    <PatientID>Y113911444</PatientID>
+    <UserId>307_919_049</UserId>
+    <TestNo>2024022871980,2024022871979,11770535,</TestNo>
+    <YbPersoninfo />`	
+</Request>
+出参示列:
+<Response><ResultCode>0000</ResultCode><ErrorMsg></ErrorMsg><Sheets><Receipt><ReceiptNo>11770535</ReceiptNo><ReceiptClass>D</ReceiptClass><SumFee>164</SumFee><DepName>超声科</DepName><ChargeType>地方医保</ChargeType><IsEmergency>0</IsEmergency><SecurityType></SecurityType><SecurityMode>0</SecurityMode><DistrictCode></DistrictCode><DistrictName></DistrictName><SpecialCode></SpecialCode><EnableInsur>1</EnableInsur><ItemList><Item><ItemNo>1</ItemNo><ItemName>颈动脉彩色多普勒超声检查</ItemName><ItemStantard>/</ItemStantard><Unit>次</Unit><Amount>1</Amount><Money>164</Money></Item></ItemList></Receipt><Receipt><ReceiptNo>2024022871979</ReceiptNo><ReceiptClass>A</ReceiptClass><SumFee>285.36</SumFee><DepName>门诊药局</DepName><ChargeType>地方医保</ChargeType><IsEmergency>0</IsEmergency><SecurityType></SecurityType><SecurityMode>0</SecurityMode><DistrictCode></DistrictCode><DistrictName></DistrictName><SpecialCode></SpecialCode><EnableInsur>1</EnableInsur><ItemList><Item><ItemNo>1</ItemNo><ItemName>匹伐他汀钙片</ItemName><ItemStantard>2mg*7兴和制药</ItemStantard><Unit>盒</Unit><Amount>8</Amount><Money>285.36</Money></Item></ItemList></Receipt><Receipt><ReceiptNo>2024022871980</ReceiptNo><ReceiptClass>A</ReceiptClass><SumFee>4.69</SumFee><DepName>门诊药局</DepName><ChargeType>地方医保</ChargeType><IsEmergency>0</IsEmergency><SecurityType></SecurityType><SecurityMode>0</SecurityMode><DistrictCode></DistrictCode><DistrictName></DistrictName><SpecialCode></SpecialCode><EnableInsur>1</EnableInsur><ItemList><Item><ItemNo>1</ItemNo><ItemName>艾司唑仑片</ItemName><ItemStantard>1mg山东信谊</ItemStantard><Unit>片</Unit><Amount>14</Amount><Money>4.69</Money></Item></ItemList></Receipt></Sheets></Response>
+2.调用GetRcptNo接口获取his收据号
+入参示列:
+<Request>
+    <UserId>307_919_049</UserId>
+</Request>
+出参示列:
+<Response><ResultCode>0000</ResultCode><ErrorMsg></ErrorMsg><RcptNo>R8870682</RcptNo></Response>
+
+
+3.调用PreBillCharge接口进行计价预结算
+入参示列:
+<Request>
+    <PatientID>Y113911444</PatientID>
+    <UserId>307_919_049</UserId>
+    <MedInsurTranNo>011100040A240228003930</MedInsurTranNo>
+    <RcptNo>R8870682</RcptNo>
+    <ChargeType>地方医保</ChargeType>
+    <SecurityMode>0</SecurityMode>
+    <SecurityCode /><Receipt><ReceiptNo>11770535</ReceiptNo><ReceiptClass>D</ReceiptClass><SumFee>164</SumFee><strReceiptChargeType>地方医保</strReceiptChargeType></Receipt><Receipt><ReceiptNo>2024022871979</ReceiptNo><ReceiptClass>A</ReceiptClass><SumFee>285.36</SumFee><strReceiptChargeType>地方医保</strReceiptChargeType></Receipt><Receipt><ReceiptNo>2024022871980</ReceiptNo><ReceiptClass>A</ReceiptClass><SumFee>4.69</SumFee><strReceiptChargeType>地方医保</strReceiptChargeType></Receipt></Request>
+
+
+出参示列:
+<Response><ResultCode>0000</ResultCode><TranFlow>7286193</TranFlow><PersaonalPay>0</PersaonalPay><MedInsurPay>345.47</MedInsurPay><PersonCountPay>108.58</PersonCountPay><ArmyPay>0</ArmyPay><OtherPay>0</OtherPay><MedInsurTranNo>011100040A240228003930</MedInsurTranNo></Response>
+
+
+4.调用AutoOPBillCharge结算
+入参示列:
+<Request>
+    <PatientID>Y113911444</PatientID>
+    <UserId>307_919_049</UserId>
+    <BankCardNo />
+    <BankID>00</BankID>
+    <PersonalPay>0</PersonalPay>
+    <MedInsurPay>345.47</MedInsurPay>
+    <MedInsurTranNo>011100040A240228003930</MedInsurTranNo>
+    <PersonCountPay>108.58</PersonCountPay>
+    <RcptNo>R8870682</RcptNo>
+    <TransactNo>7286193</TransactNo>
+    <Status>1</Status>
+    <AcctDate>20240228</AcctDate>
+    <BankTransactID />
+    <PayType>3</PayType>
+    <ArmyPay>0</ArmyPay>
+    <ChargeType>军队医改</ChargeType>
+    <SecurityMode>0</SecurityMode>
+    <SecurityCode /><Receipt><ReceiptNo>11770535</ReceiptNo><ReceiptClass>D</ReceiptClass><SumFee>164</SumFee><strReceiptChargeType>军队医改</strReceiptChargeType></Receipt><Receipt><ReceiptNo>2024022871979</ReceiptNo><ReceiptClass>A</ReceiptClass><SumFee>285.36</SumFee><strReceiptChargeType>军队医改</strReceiptChargeType></Receipt><Receipt><ReceiptNo>2024022871980</ReceiptNo><ReceiptClass>A</ReceiptClass><SumFee>4.69</SumFee><strReceiptChargeType>军队医改</strReceiptChargeType></Receipt><OtherPay>0</OtherPay></Request>
+
+
+出参示列:
+<Response><ResultCode>0000</ResultCode><Message>缴费完成通知</Message><TranTime>2024/2/28 16:14:28</TranTime><RcptNo>R8870682</RcptNo></Response>
